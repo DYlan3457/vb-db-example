@@ -32,8 +32,8 @@ Each review needs to know what user created it,
 and the ID of the coffee shop being reviewed */
 create table reviews
 (reviewid integer identity(1,1) primary key, 
-coffeeid integer foreign key references coffeeshops(shopid), 
-userid integer foreign key references users(userid), 
+coffeeid integer foreign key references coffeeshops(shopid) not null, 
+userid integer foreign key references users(userid) not null, 
 rating integer not null, 
 review_text varchar(2048),
 review_date date not null);
