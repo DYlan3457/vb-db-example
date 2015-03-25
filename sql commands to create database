@@ -19,13 +19,13 @@ if OBJECT_ID ('dbo.users', 'U') is not null
 create table coffeeshops
 (shopid integer identity(1,1) primary key, 
 name varchar(50) unique not null, 
-address varchar(255) not null);
+address varchar(255) unique not null);
 
 /* Store info about users */
 create table users
 (userid integer identity(1,1) primary key, 
 username varchar(50) unique not null,
-email varchar(100) not null);
+email varchar(100) unique not null);
 
 /* And another table for reviews. 
 Each review needs to know what user created it, 
@@ -48,7 +48,7 @@ values ('The Java Stop', '123 Hennepin'),
 insert into users (username, email)
 values ('Java Joe', 'joe@gmail.com'),
 ('Molly Mocha', 'molly@gmail.com'),
-('Carly Cap', 'carly@gmail.com');
+('Carly Coffee', 'carly@gmail.com');
 
 insert into reviews (coffeeid, userid, rating, review_text, review_date)
 values (1, 1, 5, 'This cafe has a great name!', '2012-01-02'),
