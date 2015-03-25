@@ -1,0 +1,65 @@
+/*Create a database called coffeereviews and then run these commands to create 3 tables and inserts some example data */
+/* You can add all the commands in one query */
+
+use coffeereviews
+go
+
+/*Example tables for a coffee shop review websites */
+
+/*If tables already exist, delete them.. and then recreate */
+if OBJECT_ID ('dbo.reviews', 'U') is not null
+	drop table dbo.reviews
+if OBJECT_ID ('dbo.coffeeshops', 'U') is not null
+	drop table dbo.coffeeshops
+if OBJECT_ID ('dbo.users', 'U') is not null
+	drop table dbo.users
+
+
+/*Store coffee shop information */
+create table coffeeshops
+(shopid integer identity(1,1) primary key, 
+name varchar(50) unique not null, 
+address varchar(255) not null);
+
+/* Store info about users */
+create table users
+(userid integer identity(1,1) primary key, 
+username varchar(50) unique not null,
+email varchar(100) not null);
+
+/* And another table for reviews. 
+Each review needs to know what user created it, 
+and the ID of the coffee shop being reviewed */
+create table reviews
+(reviewid integer identity(1,1) primary key, 
+coffeeid integer foreign key references coffeeshops(shopid), 
+userid integer foreign key references users(userid), 
+rating integer not null, 
+review_text varchar(2048),
+review_date date not null);
+
+/*Add some example coffee shops, users and reviews */
+
+insert into coffeeshops (name, address)
+values ('The Java Stop', '123 Hennepin'),
+('C# Cafe', '123 Nicollet'),
+('Ruby''s Coffee', '123 7th St.');    /*Have to escape the ' symbol as '' - this stores "Ruby's" */
+
+insert into users (username, email)
+values ('Java Joe', 'joe@gmail.com'),
+('Molly Mocha', 'molly@gmail.com'),
+('Carly Cap', 'carly@gmail.com');
+
+insert into reviews (coffeeid, userid, rating, review_text, review_date)
+values (1, 1, 5, 'This cafe has a great name!', '2012-01-02'),
+(1, 2, 2, 'Great name, but shame about the coffee', '2012-01-03'),
+(2, 2, 4, 'Good place for coffee', '2012-01-04'),
+(3, 3, 3, 'Average, in my opinion', '2012-01-05'),
+(3, 2, 5, 'Seriously? this place is awesome!', '2012-01-06');
+
+
+/* Run some select queries to verify our example data was added correctly */
+select * from coffeeshops
+select * from reviews
+select * from users
+
