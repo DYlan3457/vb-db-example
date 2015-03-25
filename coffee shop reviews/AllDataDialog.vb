@@ -12,10 +12,15 @@ Public Class AllDataDialog
 
         Dim allReviews As Hashtable = CType(Tag, Hashtable)
 
-        Dim output As String = " *** All Coffee Shops and Reviews *** " + vbNewLine + vbNewLine
+        Dim output As String = ""
+
+        'For every coffee shop....
+
         For Each shop As CoffeeShop In allReviews.Keys
 
             output = output + shop.Name + " - " + shop.Address + vbNewLine
+
+            'Get the list of reviews. Use vbTab and vbNewLine to display neatly. 
 
             Dim allRev As ArrayList = CType(allReviews.Item(shop), ArrayList)
 
@@ -23,18 +28,11 @@ Public Class AllDataDialog
                 output = output + vbTab + " * no reviews * " + vbNewLine
             End If
             For Each review In allRev
-                Console.WriteLine("adding tab")
                 output = output + vbTab + review.ToString + vbNewLine
-                Console.WriteLine(output)
-
             Next
-            Console.WriteLine(output)
 
             output = output + vbNewLine
         Next
-
-        Console.WriteLine(output)
-
 
         txtOutput.Text = output
 

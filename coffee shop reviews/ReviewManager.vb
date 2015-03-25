@@ -389,7 +389,7 @@ Public Class ReviewManager
             review.ReviewDate = row.Item(4)
 
             'Identify this coffee shop in the hashmap and add this review to the list of reviews
-
+            'Can you think of a nicer way to do this?
             For Each key As CoffeeShop In allCoffeeShopsAndReviews.Keys
                 If key.Id = coffeeID Then
                     CType((allCoffeeShopsAndReviews.Item(key)), ArrayList).Add(review)
