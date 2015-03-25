@@ -23,35 +23,45 @@ Partial Class AllDataDialog
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.OK_Button = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtOutput = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'OK_Button
         '
         Me.OK_Button.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.OK_Button.Location = New System.Drawing.Point(356, 280)
+        Me.OK_Button.Location = New System.Drawing.Point(430, 280)
         Me.OK_Button.Name = "OK_Button"
         Me.OK_Button.Size = New System.Drawing.Size(67, 23)
         Me.OK_Button.TabIndex = 0
         Me.OK_Button.Text = "OK"
         '
-        'TextBox1
+        'txtOutput
         '
-        Me.TextBox1.Location = New System.Drawing.Point(12, 12)
-        Me.TextBox1.Multiline = True
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.TextBox1.Size = New System.Drawing.Size(411, 249)
-        Me.TextBox1.TabIndex = 1
+        Me.txtOutput.Location = New System.Drawing.Point(12, 12)
+        Me.txtOutput.Multiline = True
+        Me.txtOutput.Name = "txtOutput"
+        Me.txtOutput.ReadOnly = True
+        Me.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.txtOutput.Size = New System.Drawing.Size(559, 262)
+        Me.txtOutput.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(0, 13)
+        Me.Label1.TabIndex = 2
         '
         'AllDataDialog
         '
         Me.AcceptButton = Me.OK_Button
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(435, 315)
-        Me.Controls.Add(Me.TextBox1)
+        Me.ClientSize = New System.Drawing.Size(583, 315)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.txtOutput)
         Me.Controls.Add(Me.OK_Button)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
@@ -59,12 +69,13 @@ Partial Class AllDataDialog
         Me.Name = "AllDataDialog"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "AllDataDialog"
+        Me.Text = "All Coffee Shops and Reviews"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents OK_Button As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents txtOutput As System.Windows.Forms.TextBox
+    Friend WithEvents Label1 As System.Windows.Forms.Label
 
 End Class

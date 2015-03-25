@@ -10,6 +10,9 @@ Public Class NewUserDialog
 
         If username = "" Or email = "" Then
             MessageBox.Show("Please enter all data")
+
+            'TODO validate email address in correct format
+
             Return
         End If
 

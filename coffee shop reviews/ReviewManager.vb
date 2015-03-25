@@ -1,10 +1,10 @@
 ﻿Imports System.Data.SqlClient
 
 '       **********  TODO Better SQL Exception handling *****************
-' TODO When new user or coffee shop is added, update the user and coffee shop comboboxes
+'TODO When new user or coffee shop is added, update the user and coffee shop comboboxes (Hint how does the DataGrid do it in Ch 16 slides?) 
 'TODO pop-up window with all coffee shops and list of reviews
 
-Public Class Form1
+Public Class ReviewManager
 
     Dim objConnection As New SqlConnection("server=localhost\sqlexpress;database=restaurants;user id=sa;password=clara") 'Change to your actual password!
     Dim objTableNameDataAdapter As SqlDataAdapter
@@ -150,9 +150,8 @@ Public Class Form1
         Dim review As String = txtReview.Text
 
         'Need to add this review. But, we need the user's ID and coffee shop ID, not their names
-
         'Method two - write one query that requests the user's ID for their user name; 
-        'and  coffee shop from the coffeeshop id, and use these in the update query.   Example:      
+        'and  coffee shop from the coffeeshop id, and use these in the update query.   Example query:      
 
         '           insert into reviews values ( (Select shopid from coffeeshops where name = 'C# Cafe'),
         '           (Select userid from users where username = 'Molly Mocha'), 5, 'Awesome', '2015-01-01' )
@@ -197,8 +196,6 @@ Public Class Form1
         End Try
 
     End Sub
-
-
 
 
     'Display the rating trackbar's value in a label. 
@@ -329,4 +326,80 @@ Public Class Form1
     End Sub
 
 
+    Private Sub btnShowAllData_Click(sender As Object, e As EventArgs) Handles btnShowAllData.Click
+
+        'Open a dialog showing a list of coffee shops, each with a list of reviews 
+        'E.g.
+        '  Java Joes, 123 Hennepin Ave
+        '       5 stars - excellent - by  Joe Java
+        ' C# Cafe, 456 Lyndale Ave
+        '       4 stars - pretty good - by Carly Coffee
+        '       5 stars - excellent - by Molly Mocha
+        '       2 stars - ew - by Joe Java
+        ' ect.
+
+
+        'Make DB request, organize data into a HashTable of coffeeshop objects and list of review objects and sent to Dialog box.
+
+        Dim allCoffeeShopsAndReviews As New Hashtable
+
+        'Request  all coffee shops
+
+        Dim allCoffeeShopsSQL As String = "Select * from coffeeshops"
+
+        Dim fetchAllCoffeeShops As New SqlDataAdapter(allCoffeeShopsSQL, objConnection)
+        Dim allCoffeeDataTable As New DataTable
+        fetchAllCoffeeShops.Fill(allCoffeeDataTable)
+
+        For Each row As DataRow In allCoffeeDataTable.Rows
+            'Make a CoffeeShop object from this row
+            Dim cs As New CoffeeShop()
+            cs.Id = row.Item(0)
+            cs.Name = row.Item(1)
+            cs.Address = row.Item(2)
+            allCoffeeShopsAndReviews.Add(cs, New ArrayList())  'Add an empty list as the value. We'll replace this with reviews (if any) in the next step.
+        Next
+
+        'Loop over all names. Fetch all reviews and the respective user name for this coffee shop
+        'This requires a Join query, covered in the DB classes
+
+        'Here's the query
+        ' select reviews.coffeeid, reviews.rating, reviews.review_text, users.username, reviews.review_date
+        ' from reviews
+        ' inner join users
+        ' on reviews.userid = users.userid
+
+        'More on that in the SQL class. 
+        'This query makes rows from both tables containing data from a row in each table where the userid is the same in each table.
+
+        Dim getReviewsWithUserNameSQL As String = "select reviews.coffeeid, reviews.rating, reviews.review_text, users.username, reviews.review_date  from reviews inner join users on reviews.userid = users.userid"
+
+        Dim fetchAllReviews As New SqlDataAdapter(getReviewsWithUserNameSQL, objConnection)
+        Dim allReviewsDataTable As New DataTable
+        fetchAllReviews.Fill(allReviewsDataTable)
+
+        'Build a review object for each row
+
+        For Each row As DataRow In allReviewsDataTable.Rows
+            Dim review As New Review()
+            Dim coffeeID As Integer = row.Item(0)
+            review.Rating = row.Item(1)
+            review.ReviewText = row.Item(2)
+            review.UserName = row.Item(3)
+            review.ReviewDate = row.Item(4)
+
+            'Identify this coffee shop in the hashmap and add this review to the list of reviews
+
+            For Each key As CoffeeShop In allCoffeeShopsAndReviews.Keys
+                If key.Id = coffeeID Then
+                    CType((allCoffeeShopsAndReviews.Item(key)), ArrayList).Add(review)
+                End If
+            Next
+
+        Next
+
+        AllDataDialog.Tag = allCoffeeShopsAndReviews
+        AllDataDialog.ShowDialog()
+
+    End Sub
 End Class
