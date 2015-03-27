@@ -10,7 +10,7 @@ This application is a part of a review management application for users to revie
 In the application, you can view any of the three tables.
 
 You can create a new user, review, and coffee shop.
-These use parameterized SQL queries which are *very* important. (see SQL injection demo application in class)
+These use parameterized SQL queries which are *very* important. (see SQL injection demo application, here https://github.com/minneapolis-edu/vb-sql-injection)
 
 You can display all of the coffee shops together with all of their reviews (which uses a SQL Join).
 
