@@ -70,12 +70,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllData.Designer.vb">
-      <DependentUpon>AllData.vb</DependentUpon>
-    </Compile>
-    <Compile Include="AllData.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="AllDataDialog.Designer.vb">
       <DependentUpon>AllDataDialog.vb</DependentUpon>
     </Compile>
@@ -118,9 +112,6 @@
     <Compile Include="User.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AllData.resx">
-      <DependentUpon>AllData.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="AllDataDialog.resx">
       <DependentUpon>AllDataDialog.vb</DependentUpon>
     </EmbeddedResource>
